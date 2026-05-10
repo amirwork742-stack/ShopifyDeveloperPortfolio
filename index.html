@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Amir Ali | Shopify Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+
+        a, button { cursor: pointer !important; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0a0e1a;
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+
+        /* ── Navigation ── */
+        .nav-glass {
+            background: rgba(10, 14, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-link {
+            position: relative;
+            color: #94a3b8;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            border-radius: 999px;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover { color: #fff; }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active { color: #fff; }
+        .nav-link.active::after { width: 100%; }
+
+        /* ── Hero ── */
+        .hero-gradient {
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.15), transparent),
+                radial-gradient(ellipse 60% 60% at 80% 50%, rgba(99, 102, 241, 0.08), transparent),
+                #0a0e1a;
+        }
+
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Profile Image ── */
+        .profile-ring {
+            position: relative;
+            display: inline-block;
+        }
+        .profile-ring::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #3b82f6, #6366f1, #8b5cf6);
+            z-index: 0;
+        }
+        .profile-ring img {
+            position: relative;
+            z-index: 1;
+            border-radius: 18px;
+            display: block;
+        }
+        .profile-glow {
+            position: absolute;
+            inset: -60px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ── Stats ── */
+        .stat-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            padding: 16px 12px;
+            transition: border-color 0.3s;
+        }
+        .stat-card:hover { border-color: rgba(59, 130, 246, 0.4); }
+
+        /* ── Skill badges ── */
+        .skill-badge {
+            background: rgba(59, 130, 246, 0.07);
+            border: 1px solid rgba(59, 130, 246, 0.18);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .skill-badge:hover {
+            background: rgba(59, 130, 246, 0.14);
+            border-color: rgba(59, 130, 246, 0.45);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* ── Section tag ── */
+        .section-tag {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            color: #60a5fa;
+        }
+
+        /* ── Service cards ── */
+        .service-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+        .service-card:hover {
+            border-color: rgba(59, 130, 246, 0.28);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.18);
+        }
+        .service-card:hover::before { transform: scaleX(1); }
+
+        .icon-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(99, 102, 241, 0.18));
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        /* ── Portfolio cards ── */
+        .portfolio-card {
+            background: #0d1220;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.35s ease;
+        }
+        .portfolio-card:hover {
+            border-color: rgba(59, 130, 246, 0.35);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.22);
+        }
+
+        .portfolio-img-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+        .portfolio-img-wrap img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+        .portfolio-card:hover .portfolio-img-wrap img { transform: scale(1.07); }
+
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10, 14, 26, 0.96) 0%, rgba(10, 14, 26, 0.3) 55%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.35s;
+            display: flex;
+            align-items: flex-end;
+            padding: 18px;
+        }
+        .portfolio-card:hover .portfolio-overlay { opacity: 1; }
+
+        /* ── Buttons ── */
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+            transition: left 0.45s;
+        }
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1.5px solid rgba(255, 255, 255, 0.14);
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            border-color: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* ── Contact ── */
+        .contact-bg {
+            background:
+                radial-gradient(ellipse 80% 80% at 50% 50%, rgba(59, 130, 246, 0.1), transparent),
+                #060b14;
+        }
+        .contact-card {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(59, 130, 246, 0.18);
+            border-radius: 24px;
+            padding: 56px 48px;
+            backdrop-filter: blur(20px);
+            text-align: center;
+        }
+
+        /* ── Scroll Reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Footer links ── */
+        .footer-link {
+            position: relative;
+            color: #6b7280;
+            transition: color 0.3s;
+        }
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            border-radius: 999px;
+            transition: width 0.3s ease;
+        }
+        .footer-link:hover { color: #e2e8f0; }
+        .footer-link:hover::after { width: 100%; }
+
+        /* ── Back to top ── */
+        #back-to-top {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            border: none;
+        }
+        #back-to-top.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        #back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Back to top -->
+    <button id="back-to-top" aria-label="Back to top">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+        </svg>
+    </button>
+
+    <!-- ── NAVBAR ── -->
+    <nav class="fixed w-full z-50 nav-glass px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="text-lg font-extrabold tracking-tight">
+                Muhammad Amir Ali<span class="text-blue-500">.</span>
+            </a>
+
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#portfolio" class="nav-link">Portfolio</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+
+            <button id="mobile-menu-button"
+                class="md:hidden text-gray-400 hover:text-white focus:outline-none transition">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu"
+            class="hidden md:hidden absolute top-full left-0 w-full bg-[#0a0e1a]/95 backdrop-blur-xl border-b border-white/10 p-6 space-y-4 shadow-2xl">
+            <a href="#about" class="block text-gray-300 hover:text-white font-medium transition">About</a>
+            <a href="#services" class="block text-gray-300 hover:text-white font-medium transition">Services</a>
+            <a href="#portfolio" class="block text-gray-300 hover:text-white font-medium transition">Portfolio</a>
+            <a href="#contact" class="block text-blue-400 hover:text-blue-300 font-bold transition">Contact</a>
+        </div>
+    </nav>
+
+    <!-- ── HERO ── -->
+    <section id="about" class="hero-gradient grid-bg pt-36 pb-24 px-6 min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center w-full">
+
+            <!-- Left content -->
+            <div class="order-2 md:order-1">
+                <div class="section-tag mb-5">Shopify Developer</div>
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
+                    Hello, I'm<br><span class="gradient-text">Muhammad Amir Ali</span>
+                </h1>
+                <p class="text-gray-400 text-lg leading-relaxed mb-8 max-w-lg">
+                    A dedicated <span class="text-white font-semibold">Shopify Developer</span> with 3+ years of
+                    experience crafting high-performing e-commerce solutions that drive sales and enhance user
+                    experience.
+                </p>
+
+                <div class="flex flex-wrap gap-4 mb-12">
+                    <a href="https://www.upwork.com/freelancers/~01e2ac0d768cd93c2c?mp_source=share"
+                        class="btn-primary px-8 py-3.5 rounded-xl font-bold text-sm inline-block">Hire Me</a>
+                    <a href="#portfolio"
+                        class="btn-secondary px-8 py-3.5 rounded-xl font-bold text-sm inline-block">View Work</a>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-4 mb-10">
+                    <div class="stat-card text-center">
+                        <div class="text-2xl font-extrabold gradient-text" data-count="3" data-suffix="+">0</div>
+                        <div class="text-xs text-gray-400 mt-1 font-medium">Years Exp.</div>
+                    </div>
+                    <div class="stat-card text-center">
+                        <div class="text-2xl font-extrabold gradient-text" data-count="20" data-suffix="+">0</div>
+                        <div class="text-xs text-gray-400 mt-1 font-medium">Projects Done</div>
+                    </div>
+                    <div class="stat-card text-center">
+                        <div class="text-2xl font-extrabold gradient-text" data-count="100" data-suffix="%">0</div>
+                        <div class="text-xs text-gray-400 mt-1 font-medium">Satisfaction</div>
+                    </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="skill-badge"><span>🚀</span> Shopify Development</div>
+                    <div class="skill-badge"><span>💎</span> Liquid / Theme Dev</div>
+                    <div class="skill-badge"><span>⚡</span> Performance Optimization</div>
+                    <div class="skill-badge"><span>📱</span> Responsive Design</div>
+                    <div class="skill-badge"><span>🎨</span> Shopify Front-End</div>
+                    <div class="skill-badge"><span>⚙️</span> Shopify Back-End</div>
+                    <div class="skill-badge"><span>🔍</span> SEO Optimization</div>
+                    <div class="skill-badge"><span>🔌</span> App Integration</div>
+                </div>
+            </div>
+
+            <!-- Right: Profile image -->
+            <div class="order-1 md:order-2 flex justify-center">
+                <div class="relative">
+                    <div class="profile-glow"></div>
+                    <div class="profile-ring">
+                        <img src="profiepicture.png" alt="Muhammad Amir Ali"
+                            class="w-72 h-96 object-cover shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SERVICES ── -->
+    <section id="services" class="py-28 px-6 bg-[#060b14]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <div class="section-tag">What I Do</div>
+                <h2 class="text-4xl font-extrabold mt-4 mb-4">My <span class="gradient-text">Services</span></h2>
+                <p class="text-gray-400 text-sm leading-relaxed max-w-xl mx-auto">From custom theme builds to full
+                    store migrations — I cover every aspect of the Shopify ecosystem.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="service-card reveal">
+                    <div class="icon-wrap">🎨</div>
+                    <h3 class="text-lg font-bold mb-3">Custom Theme Development</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Crafting unique, pixel-perfect Shopify themes
+                        from scratch using Liquid to match your brand's identity.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="icon-wrap">⚙️</div>
+                    <h3 class="text-lg font-bold mb-3">Shopify Backend & Logic</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Developing robust backend structures, metafield
+                        management, and custom business logic for your store.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="icon-wrap">🔌</div>
+                    <h3 class="text-lg font-bold mb-3">App Development & Integration</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Integrating third-party apps or building custom
+                        solutions to extend your Shopify store's capabilities.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="icon-wrap">🔍</div>
+                    <h3 class="text-lg font-bold mb-3">E-commerce Strategy & SEO</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Providing technical SEO audits and growth
+                        strategies to increase your organic traffic and visibility.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="icon-wrap">🛡️</div>
+                    <h3 class="text-lg font-bold mb-3">Maintenance & Support</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Ongoing technical support, bug fixes, and
+                        performance audits to ensure your store runs 24/7.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="icon-wrap">🚀</div>
+                    <h3 class="text-lg font-bold mb-3">Migration to Shopify</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Seamlessly migrating your products, customers,
+                        and orders from other platforms without losing SEO value.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── PORTFOLIO ── -->
+    <section id="portfolio" class="py-28 px-6 bg-[#0a0e1a]">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16 reveal">
+                <div class="section-tag">Recent Work</div>
+                <h2 class="text-4xl font-extrabold mt-4 mb-3">My <span class="gradient-text">Portfolio</span></h2>
+                <p class="text-gray-400 text-sm max-w-md">A selection of Shopify stores I've built and launched for
+                    clients worldwide.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <a href="https://studiotia.co/" target="_blank" class="portfolio-card reveal block">
+                    <div class="portfolio-img-wrap">
+                        <img src="studioTia.png" alt="Rigaud Paris">
+                        <div class="portfolio-overlay">
+                            <span class="text-xs font-bold text-white flex items-center gap-1.5">
+                                View Live Site
+                                <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">Clothing</span>
+                        <h3 class="text-base font-bold mt-1.5 mb-3">STUDIO TIA</h3>
+                        <span class="text-xs font-semibold text-blue-400">View Project →</span>
+                    </div>
+                </a>
+
+                <a href="https://www.nomaracollective.com/" target="_blank" class="portfolio-card reveal block">
+                    <div class="portfolio-img-wrap">
+                        <img src="namara collective.png" alt="Chocolate Company">
+                        <div class="portfolio-overlay">
+                            <span class="text-xs font-bold text-white flex items-center gap-1.5">
+                                View Live Site
+                                <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">Jewellary</span>
+                        <h3 class="text-base font-bold mt-1.5 mb-3">NAMARA COLLECTIVE</h3>
+                        <span class="text-xs font-semibold text-blue-400">View Project →</span>
+                    </div>
+                </a>
+
+                <a href="https://aureline-jewels.myshopify.com/" target="_blank" class="portfolio-card reveal block">
+                    <div class="portfolio-img-wrap">
+                        <img src="aureline jewels.png" alt="Custom One">
+                        <div class="portfolio-overlay">
+                            <span class="text-xs font-bold text-white flex items-center gap-1.5">
+                                View Live Site
+                                <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">Jewellary</span>
+                        <h3 class="text-base font-bold mt-1.5 mb-3">AURELINE JEWELS</h3>
+                        <span class="text-xs font-semibold text-blue-400">View Project →</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section id="contact" class="py-28 px-6 contact-bg">
+        <div class="max-w-3xl mx-auto">
+            <div class="contact-card reveal">
+                <div class="section-tag mb-6">Get In Touch</div>
+                <h2 class="text-4xl font-extrabold mb-4">
+                    Let's build something <span class="gradient-text">amazing together!</span>
+                </h2>
+                <p class="text-gray-400 mb-10 max-w-md mx-auto text-sm leading-relaxed">
+                    Have a project in mind? I'd love to help you bring it to life. Reach out on Upwork and let's get
+                    started.
+                </p>
+                <a href="https://www.upwork.com/freelancers/~01e2ac0d768cd93c2c?mp_source=share"
+                    class="btn-primary inline-block px-10 py-4 rounded-xl font-bold text-sm">
+                    Contact Me on Upwork
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer class="py-10 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+            <p>&copy; 2026 Muhammad Amir Ali. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="#about" class="footer-link">About</a>
+                <a href="#services" class="footer-link">Services</a>
+                <a href="#portfolio" class="footer-link">Portfolio</a>
+                <a href="#contact" class="footer-link">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.classList.add('hidden')));
+
+        // Back to top
+        const btt = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            btt.classList.toggle('show', window.scrollY > 400);
+        });
+        btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(sec => {
+                if (window.scrollY >= sec.offsetTop - 130) current = sec.getAttribute('id');
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+            });
+        }, { passive: true });
+
+        // Scroll reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    revealObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Animated counters
+        function animateCounter(el, target, suffix) {
+            let current = 0;
+            const duration = 1400;
+            const step = target / (duration / 16);
+            const update = () => {
+                current = Math.min(current + step, target);
+                el.textContent = Math.floor(current) + suffix;
+                if (current < target) requestAnimationFrame(update);
+            };
+            requestAnimationFrame(update);
+        }
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const target = parseInt(e.target.dataset.count);
+                    const suffix = e.target.dataset.suffix || '';
+                    animateCounter(e.target, target, suffix);
+                    counterObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.6 });
+        document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+    </script>
+
+</body>
+
+</html>
